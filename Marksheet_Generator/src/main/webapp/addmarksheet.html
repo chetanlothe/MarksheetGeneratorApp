@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="addmarksheet.css">
+
+</head>
+<body>
+             
+  <form action="addmarksheet" method="post">
+		<div class="container">
+			<div class="loginbox">
+			        <div style="position:absolute;top:130px;right:10px;">
+                    <a href="logout">LogOut</a>
+                    </div>
+			        
+
+				<h2>ADD MARKS</h2>
+				
+				<input type="text" name="name" id="Name" placeholder="Student Full Name" onchange="checkName()" required>
+				<input type="text" name="rollno" id="rollNo" placeholder="Roll No" onchange="checkRollno()" required>
+				
+				<script>
+				
+				function checkName(){
+					   const name=document.getElementById("Name").value;
+					   const tokens=name.split(" ");
+					   if(tokens.length!=3){
+						   alert('Enter Student Full Name..!');
+						   document.getElementById("Name").value = "";
+					   }
+				   }
+				   function checkRollno(){
+					   const rollNo=document.getElementById("rollNo").value;
+					   if(rollNo.length!=6){
+						   alert('Enter Valid Roll No..!');
+						   document.getElementById("rollNo").value = ""; 
+					   }
+				   }
+				   
+				   
+				</script>
+				
+				<div class="customselect">
+					<div class="select">
+						<label for="center">Select Center:</label>
+					        <select name ="centre" id="center" required>
+					          <option value="">--Please choose an option--</option>
+					          <option value="340">340</option>
+					          <option value="341">341</option>
+					          <option value="342">342</option>
+					        </select>
+					</div>
+				</div>
+				
+				
+				<div class="customselect">
+					<div class="select">
+						<label for="department">Select your Department:</label>
+					        <select name ="department" id="department" onchange="updateBranch()" required>
+					          <option value="">--Please choose an option--</option>
+					          <option value="engineering">Engineering</option>
+					          <option value="bsc">BSC</option>
+					        </select>
+					</div>
+				</div>
+				
+				<div class="customselect">
+					<div class="select" >
+					        <label for="branch">Select your Branch:</label >
+					        <select id="branch" name ="branch" onchange="updateSemester()" required>
+					          <option value="">--Please choose an option--</option>
+					        </select>
+					</div>
+				</div>
+				
+				<div class="customselect">
+					<div class="select">
+					        <label for="semester">Select your Semester: </label>
+					        <select name ="semester" id="semester" onchange="updateFields()" required>
+					          <option value="">--Please choose an option--</option>
+					        </select>
+					</div>
+				</div>
+				
+				
+    			
+				
+			</div>
+			
+			<div id="input-fields"></div>
+			
+			<div id="input-fields2"></div>
+			
+			<div id="input-fields3"></div>
+			
+		</div>
+	</form>
+	
+	
+    
+<script>
+  const branches = {
+    engineering: ['Computer Science', 'Information Technology'],
+    bsc: ['B.Sc. IT', 'B.Sc. Computer Science',]
+  };
+
+  const semesters = {
+    'Computer Science': ['1st Semester', '2nd Semester'],
+    'Information Technology': ['1st Semester', '2nd Semester'],
+    'B.Sc. IT': ['1st Semester', '2nd Semester'],
+    'B.Sc. Computer Science': ['1st Semester', '2nd Semester']
+  };
+
+  function updateBranch() {
+    const department = document.getElementById('department').value;
+    const branchDropdown = document.getElementById('branch');
+
+    // Clear existing options
+    branchDropdown.innerHTML = '<option value="">--Please choose an option--</option>';
+
+    // Add new options based on selected department
+    branches[department].forEach(branch => {
+      const option = document.createElement('option');
+      option.value = branch;
+      option.text = branch;
+      branchDropdown.add(option);
+    });
+
+    // Clear semester dropdown
+    document.getElementById('semester').innerHTML = '<option value="">--Please choose an option--</option>';
+  }
+
+  function updateSemester() {
+    const branch = document.getElementById('branch').value;
+    const semesterDropdown = document.getElementById('semester');
+
+    // Clear existing options
+    semesterDropdown.innerHTML = '<option value="">--Please choose an option--</option>';
+
+    // Add new options based on selected branch
+    semesters[branch].forEach(semester => {
+      const option = document.createElement('option');
+    
+      option.value = semester;
+      option.text = semester;
+      semesterDropdown.add(option);
+    });
+    }
+  
+  
+  function updateFields() {
+		const department = document.getElementById("department").value;
+		const branch = document.getElementById("branch").value;
+		const semester = document.getElementById("semester").value;
+		const inputFields = document.getElementById("input-fields");
+		const inputFields2 = document.getElementById("input-fields2");
+		const inputFields3 = document.getElementById("input-fields3");
+
+		if (department === "engineering" && branch === "Computer Science" && semester === "1st Semester") {
+			 inputFields.style.display = "block";
+			inputFields.innerHTML = `
+			
+			
+			<style>
+		        label {
+		          font-family: Arial, sans-serif;
+		          font-size: 16px;
+		          color: #333;
+		        }
+		        
+		        input[type="number"]{
+		        position: relative;
+		    	border: none;
+		    	border-bottom: 1px solid #a2d9ff;
+		    	outline: none;
+		    	color: black;
+		    	height: 30px;
+		    	background: transparent;
+		    	font-size: 18px;
+		        width: 100%;
+		    	margin-bottom: 15px;
+		        }
+		      </style>
+			
+		      	<h2>ADD THEORY MARKS</h2>
+		      	
+				<label for="T_OOS">Object Oriented system:</label>
+				<input type="number" id="T_OOS" name="s1T" min="0" max="80" required><br><br>
+
+				<label for="T_HPCA">High performance computer Architecture:</label>
+				<input type="number" id="T_HPCA" name="s2T" min="0" max="80" required><br><br>
+
+				<label for="T_AOS">Advances in Operating system:</label>
+				<input type="number" id="T_AOS" name="s3T" min="0" max="80" required><br><br>
+
+				<label for="T_CS">Computer System:</label>
+				<input type="number" id="T_CS" name="s4T" min="0" max="80" required><br><br>
+			`;
+			
+			
+			inputFields2.style.display = "block";
+			inputFields2.innerHTML = `
+			
+			
+			<style>
+		        label {
+		          font-family: Arial, sans-serif;
+		          font-size: 16px;
+		          color: #333;
+		        }
+		        
+		        input[type="number"]{
+		        position: relative;
+		    	border: none;
+		    	border-bottom: 1px solid #a2d9ff;
+		    	outline: none;
+		    	color: black;
+		    	height: 30px;
+		    	background: transparent;
+		    	font-size: 18px;
+		        width: 100%;
+		    	margin-bottom: 15px;
+		        }
+		      </style>
+			
+		      	<h2>ADD INTERNAL MARKS</h2>
+		      	
+				<label for="I_OOS">Object Oriented system:</label>
+				<input type="number" id="I_OOS" name="s1I" min="0" max="20" required><br><br>
+
+				<label for="I_HPCA">High performance computer Architecture:</label>
+				<input type="number" id="I_HPCA" name="s2I" min="0" max="20" required><br><br>
+
+				<label for="I_AOS">Advances in Operating system:</label>
+				<input type="number" id="I_AOS" name="s3I" min="0" max="20" required><br><br>
+
+				<label for="I_CS">Computer System:</label>
+				<input type="number" id="I_CS" name="s4I" min="0" max="20" required><br><br>
+			`;
+			
+			
+			inputFields3.style.display = "block";
+			inputFields3.innerHTML = `
+			
+			
+			<style>
+		        label {
+		          font-family: Arial, sans-serif;
+		          font-size: 16px;
+		          color: #333;
+		        }
+		        
+		        input[type="number"]{
+		        position: relative;
+		    	border: none;
+		    	border-bottom: 1px solid #a2d9ff;
+		    	outline: none;
+		    	color: black;
+		    	height: 30px;
+		    	background: transparent;
+		    	font-size: 18px;
+		        width: 100%;
+		    	margin-bottom: 15px;
+		        }
+		        
+		        
+		        input[type="submit"] {
+		        	margin: 0 25px;
+		        	border: none;
+		        	outline: none;
+		        	border-radius: 20px;
+		        	color: #fff;
+		        	background: rgb(162, 217, 255);
+		        	height: 40px;
+		        	width: 80%;
+		        	font-size: 18px;
+		        	cursor: pointer;
+		        }
+
+		        input[type="submit"]:hover {
+		        	background: rgb(151, 230, 255);
+		        	color: #FFF;
+		        }
+		        
+		        
+		        
+		      </style>
+			
+		      	<h2>PRACTICAL MARKS[I/E]</h2>
+		      	
+				<label for="IP_OOS">Object Oriented system:[Internal]</label>
+				<input type="number" id="IP_OOS" name="p1I" min="0" max="25" required><br><br>
+
+				<label for="EP_OOS">Object Oriented system:[External]</label>
+				<input type="number" id="EP_OOS" name="p1T" min="0" max="25" required><br><br>
+
+				<label for="IP_CS">Computer System:[Internal]</label>
+				<input type="number" id="IP_CS" name="p2I" min="0" max="25" required><br><br>
+
+				<label for="EP_CS">Computer System:[External]</label>
+				<input type="number" id="EP_CS" name="p2T" min="0" max="25" required><br><br>
+				
+				<input type="submit" value="Add Marks">
+				
+			`;
+			
+			
+			
+		}else if(department === "engineering" && branch === "Computer Science" && semester === "2nd Semester"){
+			 inputFields.style.display = "block";
+				inputFields.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD THEORY MARKS</h2>
+			      	
+					<label for="T_OOS">Computer Network:</label>
+					<input type="number" id="T_OOS" name="s1T" min="0" max="80" required><br><br>
+
+					<label for="T_HPCA">Theory of Computation:</label>
+					<input type="number" id="T_HPCA" name="s2T" min="0" max="80" required><br><br>
+
+					<label for="T_AOS">System Programming:</label>
+					<input type="number" id="T_AOS" name="s3T" min="0" max="80" required><br><br>
+
+					<label for="T_CS">Database Management System:</label>
+					<input type="number" id="T_CS" name="s4T" min="0" max="80" required><br><br>
+				`;
+				
+				
+				inputFields2.style.display = "block";
+				inputFields2.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD INTERNAL MARKS</h2>
+			      	
+					<label for="I_OOS">Computer Network:</label>
+					<input type="number" id="I_OOS" name="s1I" min="0" max="20" required><br><br>
+
+					<label for="I_HPCA">Theory of Computation:</label>
+					<input type="number" id="I_HPCA" name="s2I" min="0" max="20" required><br><br>
+
+					<label for="I_AOS">System Programming:</label>
+					<input type="number" id="I_AOS" name="s3I" min="0" max="20" required><br><br>
+
+					<label for="I_CS">Database Management System:</label>
+					<input type="number" id="I_CS" name="s4I" min="0" max="20" required><br><br>
+				`;
+				
+				
+				inputFields3.style.display = "block";
+				inputFields3.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			        
+			        
+			        input[type="submit"] {
+			        	margin: 0 25px;
+			        	border: none;
+			        	outline: none;
+			        	border-radius: 20px;
+			        	color: #fff;
+			        	background: rgb(162, 217, 255);
+			        	height: 40px;
+			        	width: 80%;
+			        	font-size: 18px;
+			        	cursor: pointer;
+			        }
+
+			        input[type="submit"]:hover {
+			        	background: rgb(151, 230, 255);
+			        	color: #FFF;
+			        }
+			        
+			        
+			        
+			      </style>
+				
+			      	<h2>PRACTICAL MARKS[I/E]</h2>
+			      	
+					<label for="IP_OOS">System Programming:[Internal]</label>
+					<input type="number" id="IP_OOS" name="p1I" min="0" max="25" required><br><br>
+
+					<label for="EP_OOS">System Programming:[External]</label>
+					<input type="number" id="EP_OOS" name="p1T" min="0" max="25" required><br><br>
+
+					<label for="IP_CS">Database Management System:[Internal]</label>
+					<input type="number" id="IP_CS" name="p2I" min="0" max="25" required><br><br>
+
+					<label for="EP_CS">Database Management System:[External]</label>
+					<input type="number" id="EP_CS" name="p2T" min="0" max="25" required><br><br>
+					
+					<input type="submit" value="Add Marks">
+					
+				`;
+				
+				
+				
+		}else if(department === "engineering" && branch === "Information Technology" && semester === "1st Semester"){
+			 inputFields.style.display = "block";
+				inputFields.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD THEORY MARKS</h2>
+			      	
+					<label for="T_OOS">Ethics In Information Technology:</label>
+					<input type="number" id="T_OOS" name="s1T" min="0" max="80" required><br><br>
+
+					<label for="T_HPCA">Fundamentals of Microprocessor:</label>
+					<input type="number" id="T_HPCA" name="s2T" min="0" max="80" required><br><br>
+
+					<label for="T_AOS">Data Communication:</label>
+					<input type="number" id="T_AOS" name="s3T" min="0" max="80" required><br><br>
+
+					<label for="T_CS">Database Management System:</label>
+					<input type="number" id="T_CS" name="s4T" min="0" max="80" required><br><br>
+				`;
+				
+				
+				inputFields2.style.display = "block";
+				inputFields2.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD INTERNAL MARKS</h2>
+			      	
+					<label for="I_OOS">Ethics In Information Technology:</label>
+					<input type="number" id="I_OOS" name="s1I" min="0" max="20" required><br><br>
+
+					<label for="I_HPCA">Fundamentals of Microprocessor:</label>
+					<input type="number" id="I_HPCA" name="s2I" min="0" max="20" required><br><br>
+
+					<label for="I_AOS">Data Communication:</label>
+					<input type="number" id="I_AOS" name="s3I" min="0" max="20" required><br><br>
+
+					<label for="I_CS">Database Management System:</label>
+					<input type="number" id="I_CS" name="s4I" min="0" max="20" required><br><br>
+				`;
+				
+				
+				inputFields3.style.display = "block";
+				inputFields3.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			        
+			        
+			        input[type="submit"] {
+			        	margin: 0 25px;
+			        	border: none;
+			        	outline: none;
+			        	border-radius: 20px;
+			        	color: #fff;
+			        	background: rgb(162, 217, 255);
+			        	height: 40px;
+			        	width: 80%;
+			        	font-size: 18px;
+			        	cursor: pointer;
+			        }
+
+			        input[type="submit"]:hover {
+			        	background: rgb(151, 230, 255);
+			        	color: #FFF;
+			        }
+			        
+			        
+			        
+			      </style>
+				
+			      	<h2>PRACTICAL MARKS[I/E]</h2>
+			      	
+					<label for="IP_OOS">Fundamentals of Microprocessor:[Internal]</label>
+					<input type="number" id="IP_OOS" name="p1I" min="0" max="25" required><br><br>
+
+					<label for="EP_OOS">Fundamentals of Microprocessor:[External]</label>
+					<input type="number" id="EP_OOS" name="p1T" min="0" max="25" required><br><br>
+
+					<label for="IP_CS">Database Management System:[Internal]</label>
+					<input type="number" id="IP_CS" name="p2I" min="0" max="25" required><br><br>
+
+					<label for="EP_CS">Database Management System:[External]</label>
+					<input type="number" id="EP_CS" name="p2T" min="0" max="25" required><br><br>
+					
+					<input type="submit" value="Add Marks">
+					
+				`;
+				
+				
+				
+		}else if(department === "engineering" && branch === "Information Technology" && semester === "2nd Semester"){
+			 inputFields.style.display = "block";
+				inputFields.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD THEORY MARKS</h2>
+			      	
+					<label for="T_OOS">COMPUTER ARCHITECTURE AND ORGANIZATION:</label>
+					<input type="number" id="T_OOS" name="s1T" min="0" max="80" required><br><br>
+
+					<label for="T_HPCA">OBJECT ORIENTED METHODOLOGY:</label>
+					<input type="number" id="T_HPCA" name="s2T" min="0" max="80" required><br><br>
+
+					<label for="T_AOS">ALGORITHMS AND DATA STRUCTURES:</label>
+					<input type="number" id="T_AOS" name="s3T" min="0" max="80" required><br><br>
+
+					<label for="T_CS">Computer System:</label>
+					<input type="number" id="T_CS" name="s4T" min="0" max="80" required><br><br>
+				`;
+				
+				
+				inputFields2.style.display = "block";
+				inputFields2.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD INTERNAL MARKS</h2>
+			      	
+					<label for="I_OOS">COMPUTER ARCHITECTURE AND ORGANIZATION:</label>
+					<input type="number" id="I_OOS" name="s1I" min="0" max="20" required><br><br>
+
+					<label for="I_HPCA">OBJECT ORIENTED METHODOLOGY:</label>
+					<input type="number" id="I_HPCA" name="s2I" min="0" max="20" required><br><br>
+
+					<label for="I_AOS">ALGORITHMS AND DATA STRUCTURES:</label>
+					<input type="number" id="I_AOS" name="s3I" min="0" max="20" required><br><br>
+
+					<label for="I_CS">Computer System:</label>
+					<input type="number" id="I_CS" name="s4I" min="0" max="20" required><br><br>
+				`;
+				
+				
+				inputFields3.style.display = "block";
+				inputFields3.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			        
+			        
+			        input[type="submit"] {
+			        	margin: 0 25px;
+			        	border: none;
+			        	outline: none;
+			        	border-radius: 20px;
+			        	color: #fff;
+			        	background: rgb(162, 217, 255);
+			        	height: 40px;
+			        	width: 80%;
+			        	font-size: 18px;
+			        	cursor: pointer;
+			        }
+
+			        input[type="submit"]:hover {
+			        	background: rgb(151, 230, 255);
+			        	color: #FFF;
+			        }
+			        
+			        
+			        
+			      </style>
+				
+			      	<h2>PRACTICAL MARKS[I/E]</h2>
+			      	
+					<label for="IP_OOS">COMPUTER ARCHITECTURE AND ORGANIZATION:[Internal]</label>
+					<input type="number" id="IP_OOS" name="p1I" min="0" max="25" required><br><br>
+
+					<label for="EP_OOS">COMPUTER ARCHITECTURE AND ORGANIZATION:[External]</label>
+					<input type="number" id="EP_OOS" name="p1T" min="0" max="25" required><br><br>
+
+					<label for="IP_CS">ALGORITHMS AND DATA STRUCTURES:[Internal]</label>
+					<input type="number" id="IP_CS" name="p2I" min="0" max="25" required><br><br>
+
+					<label for="EP_CS">ALGORITHMS AND DATA STRUCTURES:[External]</label>
+					<input type="number" id="EP_CS" name="p2T" min="0" max="25" required><br><br>
+					
+					<input type="submit" value="Add Marks">
+					
+				`;
+				
+				
+				
+		}else if(department === "bsc" && branch === "B.Sc. IT" && semester === "2nd Semester"){
+			 inputFields.style.display = "block";
+				inputFields.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD THEORY MARKS</h2>
+			      	
+					<label for="T_OOS">Logic Discrete Mathematical Structures:</label>
+					<input type="number" id="T_OOS" name="s1T" min="0" max="80" required><br><br>
+
+					<label for="T_HPCA">Computational Mathematics:</label>
+					<input type="number" id="T_HPCA" name="s2T" min="0" max="80" required><br><br>
+
+					<label for="T_AOS">DBMS Systems:</label>
+					<input type="number" id="T_AOS" name="s3T" min="0" max="80" required><br><br>
+
+					<label for="T_CS">Operating Systems:</label>
+					<input type="number" id="T_CS" name="s4T" min="0" max="80" required><br><br>
+				`;
+				
+				
+				inputFields2.style.display = "block";
+				inputFields2.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD INTERNAL MARKS</h2>
+			      	
+					<label for="I_OOS">Logic Discrete Mathematical Structures:</label>
+					<input type="number" id="I_OOS" name="s1I" min="0" max="20" required><br><br>
+
+					<label for="I_HPCA">Computational Mathematics:</label>
+					<input type="number" id="I_HPCA" name="s2I" min="0" max="20" required><br><br>
+
+					<label for="I_AOS">DBMS Systems:</label>
+					<input type="number" id="I_AOS" name="s3I" min="0" max="20" required><br><br>
+
+					<label for="I_CS">Operating Systems:</label>
+					<input type="number" id="I_CS" name="s4I" min="0" max="20" required><br><br>
+				`;
+				
+				
+				inputFields3.style.display = "block";
+				inputFields3.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			        
+			        
+			        input[type="submit"] {
+			        	margin: 0 25px;
+			        	border: none;
+			        	outline: none;
+			        	border-radius: 20px;
+			        	color: #fff;
+			        	background: rgb(162, 217, 255);
+			        	height: 40px;
+			        	width: 80%;
+			        	font-size: 18px;
+			        	cursor: pointer;
+			        }
+
+			        input[type="submit"]:hover {
+			        	background: rgb(151, 230, 255);
+			        	color: #FFF;
+			        }
+			        
+			        
+			        
+			      </style>
+				
+			      	<h2>PRACTICAL MARKS[I/E]</h2>
+			      	
+					<label for="IP_OOS">DBMS Systems:[Internal]</label>
+					<input type="number" id="IP_OOS" name="p1I" min="0" max="25" required><br><br>
+
+					<label for="EP_OOS">DBMS Systems:[External]</label>
+					<input type="number" id="EP_OOS" name="p1T" min="0" max="25" required><br><br>
+
+					<label for="IP_CS">Operating Systems:[Internal]</label>
+					<input type="number" id="IP_CS" name="p2I" min="0" max="25" required><br><br>
+
+					<label for="EP_CS">Operating Systems:[External]</label>
+					<input type="number" id="EP_CS" name="p2T" min="0" max="25" required><br><br>
+					
+					<input type="submit" value="Add Marks">
+					
+				`;
+				
+				
+				
+		}else if(department === "bsc" && branch === "B.Sc. Computer Science" && semester === "1st Semester"){
+			 inputFields.style.display = "block";
+				inputFields.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD THEORY MARKS</h2>
+			      	
+					<label for="T_OOS">Java Programming:</label>
+					<input type="number" id="T_OOS" name="s1T" min="0" max="80" required><br><br>
+
+					<label for="T_HPCA">Oracle:</label>
+					<input type="number" id="T_HPCA" name="s2T" min="0" max="80" required><br><br>
+
+					<label for="T_AOS">Python:</label>
+					<input type="number" id="T_AOS" name="s3T" min="0" max="80" required><br><br>
+
+					<label for="T_CS">Ajax:</label>
+					<input type="number" id="T_CS" name="s4T" min="0" max="80" required><br><br>
+				`;
+				
+				
+				inputFields2.style.display = "block";
+				inputFields2.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD INTERNAL MARKS</h2>
+			      	
+					<label for="I_OOS">Java Programming:</label>
+					<input type="number" id="I_OOS" name="s1I" min="0" max="20" required><br><br>
+
+					<label for="I_HPCA">Oracle:</label>
+					<input type="number" id="I_HPCA" name="s2I" min="0" max="20" required><br><br>
+
+					<label for="I_AOS">Python:</label>
+					<input type="number" id="I_AOS" name="s3I" min="0" max="20" required><br><br>
+
+					<label for="I_CS">Ajax:</label>
+					<input type="number" id="I_CS" name="s4I" min="0" max="20" required><br><br>
+				`;
+				
+				
+				inputFields3.style.display = "block";
+				inputFields3.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			        
+			        
+			        input[type="submit"] {
+			        	margin: 0 25px;
+			        	border: none;
+			        	outline: none;
+			        	border-radius: 20px;
+			        	color: #fff;
+			        	background: rgb(162, 217, 255);
+			        	height: 40px;
+			        	width: 80%;
+			        	font-size: 18px;
+			        	cursor: pointer;
+			        }
+
+			        input[type="submit"]:hover {
+			        	background: rgb(151, 230, 255);
+			        	color: #FFF;
+			        }
+			        
+			        
+			        
+			      </style>
+				
+			      	<h2>PRACTICAL MARKS[I/E]</h2>
+			      	
+					<label for="IP_OOS">Python :[Internal]</label>
+					<input type="number" id="IP_OOS" name="p1I" min="0" max="25" required><br><br>
+
+					<label for="EP_OOS">Python :[External]</label>
+					<input type="number" id="EP_OOS" name="p1T" min="0" max="25" required><br><br>
+
+					<label for="IP_CS">Java Programming:[Internal]</label>
+					<input type="number" id="IP_CS" name="p2I" min="0" max="25" required><br><br>
+
+					<label for="EP_CS">Java Programming:[External]</label>
+					<input type="number" id="EP_CS" name="p2T" min="0" max="25" required><br><br>
+					
+					<input type="submit" value="Add Marks">
+					
+				`;
+				
+				
+				
+		}else if(department === "bsc" && branch === "B.Sc. Computer Science" && semester === "2nd Semester"){
+			 inputFields.style.display = "block";
+				inputFields.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD THEORY MARKS</h2>
+			      	
+					<label for="T_OOS">Discrete Structures:</label>
+					<input type="number" id="T_OOS" name="s1T" min="0" max="80" required><br><br>
+
+					<label for="T_HPCA">HTML Programming:</label>
+					<input type="number" id="T_HPCA" name="s2T" min="0" max="80" required><br><br>
+
+					<label for="T_AOS">Cloud Computing:</label>
+					<input type="number" id="T_AOS" name="s3T" min="0" max="80" required><br><br>
+
+					<label for="T_CS">Mobile Applications:</label>
+					<input type="number" id="T_CS" name="s4T" min="0" max="80" required><br><br>
+				`;
+				
+				
+				inputFields2.style.display = "block";
+				inputFields2.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD INTERNAL MARKS</h2>
+			      	
+					<label for="I_OOS">Discrete Structures:</label>
+					<input type="number" id="I_OOS" name="s1I" min="0" max="20" required><br><br>
+
+					<label for="I_HPCA">HTML Programming:</label>
+					<input type="number" id="I_HPCA" name="s2I" min="0" max="20" required><br><br>
+
+					<label for="I_AOS">Cloud Computing:</label>
+					<input type="number" id="I_AOS" name="s3I" min="0" max="20" required><br><br>
+
+					<label for="I_CS">Mobile Applications:</label>
+					<input type="number" id="I_CS" name="s4I" min="0" max="20" required><br><br>
+				`;
+				
+				
+				inputFields3.style.display = "block";
+				inputFields3.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			        
+			        
+			        input[type="submit"] {
+			        	margin: 0 25px;
+			        	border: none;
+			        	outline: none;
+			        	border-radius: 20px;
+			        	color: #fff;
+			        	background: rgb(162, 217, 255);
+			        	height: 40px;
+			        	width: 80%;
+			        	font-size: 18px;
+			        	cursor: pointer;
+			        }
+
+			        input[type="submit"]:hover {
+			        	background: rgb(151, 230, 255);
+			        	color: #FFF;
+			        }
+			        
+			        
+			        
+			      </style>
+				
+			      	<h2>PRACTICAL MARKS[I/E]</h2>
+			      	
+					<label for="IP_OOS">HTML Programming:[Internal]</label>
+					<input type="number" id="IP_OOS" name="p1I" min="0" max="25" required><br><br>
+
+					<label for="EP_OOS">HTML Programming:[External]</label>
+					<input type="number" id="EP_OOS" name="p1T" min="0" max="25" required><br><br>
+
+					<label for="IP_CS">Cloud Computing:[Internal]</label>
+					<input type="number" id="IP_CS" name="p2I" min="0" max="25" required><br><br>
+
+					<label for="EP_CS">Cloud Computing:[External]</label>
+					<input type="number" id="EP_CS" name="p2T" min="0" max="25" required><br><br>
+					
+					<input type="submit" value="Add Marks">
+					
+				`;
+				
+				
+				
+		}else if(department === "bsc" && branch === "B.Sc. IT" && semester === "1st Semester"){
+			 inputFields.style.display = "block";
+				inputFields.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD THEORY MARKS</h2>
+			      	
+					<label for="T_OOS">COMPUTER Science:</label>
+					<input type="number" id="T_OOS" name="s1T" min="0" max="80" required><br><br>
+
+					<label for="T_HPCA">Advanced and Data Structure:</label>
+					<input type="number" id="T_HPCA" name="s2T" min="0" max="80" required><br><br>
+
+					<label for="T_AOS">Digital Computer Fundamentals:</label>
+					<input type="number" id="T_AOS" name="s3T" min="0" max="80" required><br><br>
+
+					<label for="T_CS">Computer Graphics:</label>
+					<input type="number" id="T_CS" name="s4T" min="0" max="80" required><br><br>
+				`;
+				
+				
+				inputFields2.style.display = "block";
+				inputFields2.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			      </style>
+				
+			      	<h2>ADD INTERNAL MARKS</h2>
+			      	
+					<label for="I_OOS">COMPUTER Science:</label>
+					<input type="number" id="I_OOS" name="s1I" min="0" max="20" required><br><br>
+
+					<label for="I_HPCA">Advanced and Data Structure:</label>
+					<input type="number" id="I_HPCA" name="s2I" min="0" max="20" required><br><br>
+
+					<label for="I_AOS">Digital Computer Fundamentals:</label>
+					<input type="number" id="I_AOS" name="s3I" min="0" max="20" required><br><br>
+
+					<label for="I_CS">Computer Graphics:</label>
+					<input type="number" id="I_CS" name="s4I" min="0" max="20" required><br><br>
+				`;
+				
+				
+				inputFields3.style.display = "block";
+				inputFields3.innerHTML = `
+				
+				
+				<style>
+			        label {
+			          font-family: Arial, sans-serif;
+			          font-size: 16px;
+			          color: #333;
+			        }
+			        
+			        input[type="number"]{
+			        position: relative;
+			    	border: none;
+			    	border-bottom: 1px solid #a2d9ff;
+			    	outline: none;
+			    	color: black;
+			    	height: 30px;
+			    	background: transparent;
+			    	font-size: 18px;
+			        width: 100%;
+			    	margin-bottom: 15px;
+			        }
+			        
+			        
+			        input[type="submit"] {
+			        	margin: 0 25px;
+			        	border: none;
+			        	outline: none;
+			        	border-radius: 20px;
+			        	color: #fff;
+			        	background: rgb(162, 217, 255);
+			        	height: 40px;
+			        	width: 80%;
+			        	font-size: 18px;
+			        	cursor: pointer;
+			        }
+
+			        input[type="submit"]:hover {
+			        	background: rgb(151, 230, 255);
+			        	color: #FFF;
+			        }
+			        
+			        
+			        
+			      </style>
+				
+			      	<h2>PRACTICAL MARKS[I/E]</h2>
+			      	
+					<label for="IP_OOS">COMPUTER Science:[Internal]</label>
+					<input type="number" id="IP_OOS" name="p1I" min="0" max="25" required><br><br>
+
+					<label for="EP_OOS">COMPUTER Science:[External]</label>
+					<input type="number" id="EP_OOS" name="p1T" min="0" max="25" required><br><br>
+
+					<label for="IP_CS">Advanced and Data Structure:[Internal]</label>
+					<input type="number" id="IP_CS" name="p2I" min="0" max="25" required><br><br>
+
+					<label for="EP_CS">Advanced and Data Structure:[External]</label>
+					<input type="number" id="EP_CS" name="p2T" min="0" max="25" required><br><br>
+					
+					<input type="submit" value="Add Marks">
+					
+				`;
+				
+				
+				
+		}
+		
+		else {
+			inputFields.innerHTML = "";
+			inputFields.style.display = "none";
+			inputFields2.innerHTML = "";
+			inputFields2.style.display = "none";
+			inputFields3.innerHTML = "";
+			inputFields3.style.display = "none";
+		}
+	}
+  
+  
+    </script>
+
+
+
+</body>
+</html>

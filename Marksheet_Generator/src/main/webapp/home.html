@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="home.css">
+</head>
+<body>
+
+    <form action="ServletHome" method="post">
+		<div class="container">
+			<div class="loginbox">
+				<h2>RESULT</h2>
+				<div class="customselect">
+					<div class="select">
+						<label for="department">Select your Department:</label>
+					        <select name ="dept" id="department" onchange="updateBranch()" required>
+					          <option value="">--Please choose an option--</option>
+					          <option value="engineering">Engineering</option>
+					          <option value="bsc">B.SC</option>
+					        </select>
+					</div>
+				</div>
+				
+				<div class="customselect">
+					<div class="select" >
+					        <label for="branch">Select your Branch:</label >
+					        <select id="branch" name ="branch" onchange="updateSemester()" required>
+					          <option value="">--Please choose an option--</option>
+					        </select>
+					</div>
+				</div>
+				
+				<div class="customselect">
+					<div class="select">
+					        <label for="semester">Select your Semester:</label>
+					        <select name ="semester" id="semester" required>
+					          <option value="">--Please choose an option--</option>
+					        </select>
+					</div>
+				</div>
+				
+				<input type="text" name="rollno" placeholder="Roll No" required>
+    			<input type="submit" value="View Marksheet">
+				
+					<p style="text-align:center ;">
+						Login as Evaluator<a href="evaluator.html">&nbsp;&nbsp;Login</a>
+					</p>
+			</div>
+		</div>
+	</form>
+    
+    
+
+    <script>
+  const branches = {
+    engineering: ['Computer Science', 'Information Technology'],
+    bsc: ['B.Sc. IT', 'B.Sc. Computer Science',]
+  };
+
+  const semesters = {
+    'Computer Science': ['1st Semester', '2nd Semester'],
+    'Information Technology': ['1st Semester', '2nd Semester'],
+    'B.Sc. IT': ['1st Semester', '2nd Semester'],
+    'B.Sc. Computer Science': ['1st Semester', '2nd Semester']
+  };
+
+  function updateBranch() {
+    const department = document.getElementById('department').value;
+    const branchDropdown = document.getElementById('branch');
+
+    // Clear existing options
+    branchDropdown.innerHTML = '<option value="">--Please choose an option--</option>';
+
+    // Add new options based on selected department
+    branches[department].forEach(branch => {
+      const option = document.createElement('option');
+      option.value = branch;
+      option.text = branch;
+      branchDropdown.add(option);
+    });
+
+    // Clear semester dropdown
+    document.getElementById('semester').innerHTML = '<option value="">--Please choose an option--</option>';
+  }
+
+  function updateSemester() {
+    const branch = document.getElementById('branch').value;
+    const semesterDropdown = document.getElementById('semester');
+
+    // Clear existing options
+    semesterDropdown.innerHTML = '<option value="">--Please choose an option--</option>';
+
+    // Add new options based on selected branch
+    semesters[branch].forEach(semester => {
+      const option = document.createElement('option');
+    
+      option.value = semester;
+      option.text = semester;
+      semesterDropdown.add(option);
+    });
+    }
+    </script>
+    
+  </body>
+</html>
